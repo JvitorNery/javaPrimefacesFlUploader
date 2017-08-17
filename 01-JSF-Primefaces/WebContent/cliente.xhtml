@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="_template.xhtml">
+		<ui:define name="container">
+			<p:panel header="#{clienteBean.cliente.codigo==0?'Cadastro':'Edição'} de Cliente"
+				toggleable="true">
+				<h:form>
+					<p:messages/>
+					<p:growl/>
+					<h:inputHidden value="#{clienteBean.cliente.codigo}" />
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Nome" for="nome"/>
+						<p:inputText value="#{clienteBean.cliente.nome}" id="nome"/>
+						
+						<p:outputLabel value="CPF" for="cpf"/>
+						<p:inputMask mask="999.999.999-99" value="#{clienteBean.cliente.cpf}" id="cpf"/>
+						
+						<p:outputLabel value="Data Nascimento" for="dt"/>
+						<p:calendar pattern="dd/MM/yyyy" id="dt"
+							value="#{clienteBean.cliente.dataNascimento.time}"/>
+						
+						<p:outputLabel value="Rating" for="rating"/>
+						<p:rating stars="10" id="rating" 
+								value="#{clienteBean.cliente.rating}"/>
+								
+								<p:graphicImage id="foto2" value="#clienteBean.foto" cache="false"/>
+								<p:fileUpload
+									auto="false"
+									allowtypes="/(\.|\/)(gif|jpe?g|png)$/"
+									sizeLimit="1000000"
+									fileUploadListener="#{clienteBean.subirFoto}"
+									update="foto2"/>	
+						
+						<p:commandButton action="#{clienteBean.cadastrar()}" value="Gravar"/>
+					</h:panelGrid>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</html>
